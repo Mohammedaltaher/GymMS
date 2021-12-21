@@ -1,0 +1,128 @@
+﻿@layout LoginLayout;
+@page "/account/register"
+@using Application.Features.UserAccountFeatures.Commands
+
+
+<PageTitle>Register</PageTitle>
+@inject IMediator Mediator;
+@*@inject ILogger Logger;*@
+
+
+<div class="hold-transition register-page">
+    <div class="register-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Register a new membership</p>
+
+                <EditForm OnSubmit="@HandleSubmit" EditContext="@editContext">
+                    <DataAnnotationsValidator />
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Full name" @bind-value="register.Name">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                        <ValidationMessage For="@(() => register.Name)" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email" @bind-value="register.Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                        <ValidationMessage For="@(() => register.Email)" />
+
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Username" @bind-value="register.Username">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                        <ValidationMessage For="@(() => register.Username)" />
+
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password" @bind-value="register.Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        <ValidationMessage For="@(() => register.Password)" />
+
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Retype password" @bind-value="register.RePassword">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        <ValidationMessage For="@(() => register.RePassword)" />
+
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                                <label for="agreeTerms">
+                                    I agree to the <a href="#">terms</a>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </EditForm>
+
+                <div class="social-auth-links text-center">
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i>
+                        Sign up using Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i>
+                        Sign up using Google+
+                    </a>
+                </div>
+
+                <a href="login.html" class="text-center">I already have a membership</a>
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
+</div>
+@code {
+    private CreateUserAccountCommand register = new();
+    private EditContext? editContext;
+    //private CustomFormValidator customFormValidator;
+    private bool isRegistrationSuccess = false;
+    protected override async Task OnInitializedAsync()
+    {
+        editContext = new(register);
+    }
+    private async Task HandleSubmit()
+    {
+        isRegistrationSuccess = false;
+        if (editContext != null && editContext.Validate())
+        {
+            BaseModel? obj = await Mediator.Send(register);
+            int userId = (int)obj.Data;
+            await Task.CompletedTask;
+        }
+        else
+        {
+             //Logger.LogInformation("HandleSubmit called: Form is INVALID");
+        }
+    }
+}

@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.Common;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -15,7 +16,6 @@ namespace Application
         public static void AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
             var mapperConfig = new MapperConfiguration(profile =>
             {
                 profile.AddProfile(new UserProfile());

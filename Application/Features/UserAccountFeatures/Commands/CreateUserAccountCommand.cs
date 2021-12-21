@@ -9,15 +9,24 @@ using System.Linq;
 using Application.Model.Common;
 using Microsoft.AspNetCore.Http;
 using Application.Helper.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.Features.UserAccountFeatures.Commands
 {
     public class CreateUserAccountCommand : IRequest<BaseModel>
     {
+        [Required]
+        [StringLength(50, ErrorMessage = "Name too long (50 character limit).")]
         public string Name { get; set; }
+        [Required]
+        [StringLength(16, ErrorMessage = "User Name too long (16 character limit).")]
         public string Username { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
         public string Password { get; set; }
+        [Required]
+        public string RePassword { get; set; }
         public class CreateUserAccountCommandHandler : IRequestHandler<CreateUserAccountCommand, BaseModel>
         {
             private readonly IApplicationDbContext _context;
