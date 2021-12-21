@@ -40,6 +40,7 @@ public class AdditionalFeatureTest : IClassFixture<SharedDatabaseFixture>
         Assert.NotNull(additionalFeature);
         Assert.Equal(AdditionalFeatureData.MockAdditionalFeatureSamples()[0].Name, additionalFeature[0].Name);
         Assert.Equal(2, additionalFeature.Count);
+       
     }
 
 

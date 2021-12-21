@@ -21,7 +21,10 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicatio
     {
         _httpContextAccessor = httpContextAccessor;
         _userId = _httpContextAccessor?.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        Database.Migrate();
+        if (Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+        {
+            Database.Migrate();
+        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
