@@ -37,7 +37,7 @@ namespace WebApi.Controllers.v1
         public async Task<IActionResult> CreateAdmin(CreateAdminUserAccountCommand command)
         {
             var obj = await Mediator.Send(command);
-            return StatusCode(obj.StatusCode, new { Data = (JWTTokenModel)obj.Data, Message = obj.Messege });
+            return StatusCode(obj.StatusCode, new { Data = (JWTToken)obj.Data, Message = obj.Messege });
         }
         /// <summary>
         /// Create new admin user.
@@ -49,7 +49,7 @@ namespace WebApi.Controllers.v1
         public async Task<IActionResult> UserLogin(LoginCommand command)
         {
             var obj = await Mediator.Send(command);
-            return StatusCode(obj.StatusCode, new { Data =(JWTTokenModel) obj.Data, Message = obj.Messege });
+            return StatusCode(obj.StatusCode, new { Data =(JWTToken) obj.Data, Message = obj.Messege });
         }
     }
 }

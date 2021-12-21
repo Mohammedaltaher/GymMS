@@ -1,5 +1,6 @@
 using Application;
 using Application.Common;
+using Application.Model.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
-
     }
     /// <summary>
     /// 
@@ -51,9 +51,14 @@ public class Startup
                 config.ReportApiVersions = true;
         });
         #endregion
+        #region options Pattren
+        JWTOptions jWTOptions = new ();
+        Configuration.GetSection(JWTOptions.JWT).Bind(jWTOptions);
+        //inject configrations in the pipline  injected like this (IOptions<JWTOptions> options)
+        services.Configure<JWTOptions>(Configuration.GetSection(JWTOptions.JWT));
+        #endregion
 
         services.AddApplication();
-
         services.AddPersistence(Configuration);
 
         #region Add Authentication & Swagger
@@ -65,8 +70,7 @@ public class Startup
         })
             .AddJwtBearer(jwt =>
                 {
-                    var key = Encoding.ASCII.GetBytes(Configuration["Jwt:Secret"]);
-
+                    
                     jwt.SaveToken = true;
                     jwt.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -74,9 +78,9 @@ public class Startup
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                        ValidIssuer = jWTOptions.Issuer,
+                        ValidAudience = jWTOptions.Issuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jWTOptions.Secret))
                     };
 
                 });

@@ -77,7 +77,7 @@ namespace Application.Features.UserAccountFeatures.Commands
 
                 return new BaseModel
                 {
-                    Data = new JWTTokenModel
+                    Data = new JWTToken
                     {
                         Token = new JwtSecurityTokenHandler().WriteToken(token),
                         Expiration = token.ValidTo

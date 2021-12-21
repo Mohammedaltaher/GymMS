@@ -364,3 +364,8 @@
 2021-12-21 13:24:42.5930 Info Adding target FileTarget(Name=alldata)
 2021-12-21 13:24:42.5930 Info Adding target FileTarget(Name=otherFile-web)
 2021-12-21 13:24:42.6247 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=E:\DotNet5\GymMS\BlazorWebUI\bin\Debug\net6.0\nlog.config
+2021-12-21 14:10:48.1077 Info Message Template Auto Format enabled
+2021-12-21 14:10:48.1316 Info Loading assembly: NLog.Web.AspNetCore
+2021-12-21 14:10:48.1857 Info Adding target FileTarget(Name=alldata)
+2021-12-21 14:10:48.1857 Info Adding target FileTarget(Name=otherFile-web)
+2021-12-21 14:10:48.2169 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=E:\DotNet5\GymMS\BlazorWebUI\bin\Debug\net6.0\nlog.config

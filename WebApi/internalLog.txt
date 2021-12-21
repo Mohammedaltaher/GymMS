@@ -354,3 +354,23 @@
 2021-12-21 11:07:51.8647 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
 2021-12-21 11:07:53.0762 Info AppDomain Shutting down. Logger closing...
 2021-12-21 11:07:53.0840 Info Logger has been shut down.
+2021-12-21 14:11:31.0838 Info Message Template Auto Format enabled
+2021-12-21 14:11:31.1245 Info Loading assembly: NLog.Web.AspNetCore
+2021-12-21 14:11:31.1650 Info Adding target FileTarget(Name=alldata)
+2021-12-21 14:11:31.1650 Info Adding target FileTarget(Name=otherFile-web)
+2021-12-21 14:11:31.1896 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=E:\DotNet5\GymMS\WebApi\bin\Debug\net6.0\nlog.config
+2021-12-21 14:12:22.0192 Info Message Template Auto Format enabled
+2021-12-21 14:12:22.0251 Info Loading assembly: NLog.Web.AspNetCore
+2021-12-21 14:12:22.0585 Info Adding target FileTarget(Name=alldata)
+2021-12-21 14:12:22.0585 Info Adding target FileTarget(Name=otherFile-web)
+2021-12-21 14:12:22.0854 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=E:\DotNet5\GymMS\WebApi\bin\Debug\net6.0\nlog.config
+2021-12-21 14:15:57.7325 Info Message Template Auto Format enabled
+2021-12-21 14:15:57.7325 Info Loading assembly: NLog.Web.AspNetCore
+2021-12-21 14:15:57.7890 Info Adding target FileTarget(Name=alldata)
+2021-12-21 14:15:57.8015 Info Adding target FileTarget(Name=otherFile-web)
+2021-12-21 14:15:57.8257 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=E:\DotNet5\GymMS\WebApi\bin\Debug\net6.0\nlog.config
+2021-12-21 14:18:01.7159 Info Message Template Auto Format enabled
+2021-12-21 14:18:01.7159 Info Loading assembly: NLog.Web.AspNetCore
+2021-12-21 14:18:01.7678 Info Adding target FileTarget(Name=alldata)
+2021-12-21 14:18:01.7791 Info Adding target FileTarget(Name=otherFile-web)
+2021-12-21 14:18:01.8050 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=E:\DotNet5\GymMS\WebApi\bin\Debug\net6.0\nlog.config

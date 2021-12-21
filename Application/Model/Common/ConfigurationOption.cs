@@ -9,24 +9,29 @@ using System.Threading.Tasks;
 
 namespace Application.Model.Common
 {
-    public class JWTTokenModel
+    public class JWTToken
     {
        public string Token { get; set; }
        public DateTime? Expiration { get; set; }
     }
-    public class AppsettingModel
+    public class AppsettingOptions
     {
-        public ConnectionStrings ConnectionStrings { get; set; }
-        public JWTModel Jwt { get; set; }
+        public const string Appsetting = "Appsetting";
+
+        public ConnectionStringsOptions ConnectionStrings { get; set; }
+        public JWTOptions Jwt { get; set; }
 
     }
-    public class ConnectionStrings
+    public class ConnectionStringsOptions
     {
+        public const string ConnectionStrings = "ConnectionStrings";
+
         public string DefaultConnection { get; set; }
 
     }
-    public class JWTModel
+    public class JWTOptions
     {
+        public const string JWT = "JWT";
         public string Secret { get; set; }
         public string Key { get; set; }
         public string Issuer { get; set; }
