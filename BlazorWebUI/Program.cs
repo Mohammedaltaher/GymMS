@@ -1,13 +1,18 @@
 using Application;
 using BlazorWebUI.Data;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Persistence;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+}).UseNLog();
 
 // Add services to the container.
-//builder.Services.AddMediatR();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
