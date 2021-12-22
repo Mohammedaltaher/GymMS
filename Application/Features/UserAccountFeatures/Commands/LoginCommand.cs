@@ -15,18 +15,22 @@ using Microsoft.Extensions.Configuration;
 using Application.Common;
 using Application.Model.Common;
 using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.Features.UserAccountFeatures.Commands
 {
     public class LoginCommand : IRequest<BaseModel>
     {
+        [Required]
+        [Display(Name ="User Name")]
         public string Username { get; set; }
+        [Required]
         public string Password { get; set; }
         public class LoginCommandHandler : IRequestHandler<LoginCommand, BaseModel>
         {
             private readonly UserManager<User> _userManager;
             private readonly IConfiguration _configuration;
-            public LoginCommandHandler( UserManager<User> userManager, IConfiguration configuration)
+            public LoginCommandHandler(UserManager<User> userManager, IConfiguration configuration)
             {
                 _userManager = userManager;
                 _configuration = configuration;

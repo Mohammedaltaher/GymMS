@@ -1,9 +1,11 @@
 ﻿@layout LoginLayout;
 @page "/account/login"
+@using Application.Features.UserAccountFeatures.Commands
 
 
 <PageTitle>Additional Features </PageTitle>
 @inject IMediator Mediator;
+@inject NavigationManager NavManager;
 
 <PageTitle>Additional Features </PageTitle>
 
@@ -18,22 +20,25 @@
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <form action="../../index3.html" method="post">
+                <EditForm OnSubmit="@HandleLogin" EditContext="@editContext">
+                    <DataAnnotationsValidator />
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="text" class="form-control" placeholder="Email" @bind-value="login.Username">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
+                        <ValidationMessage For="@(() => login.Username)" />
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" placeholder="Password" @bind-value="login.Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
+                        <ValidationMessage For="@(() => login.Password)" />
                     </div>
                     <div class="row">
                         <div class="col-8">
@@ -50,7 +55,7 @@
                         </div>
                         <!-- /.col -->
                     </div>
-                </form>
+                </EditForm>
 
                 <div class="social-auth-links text-center mt-2 mb-3">
                     <a href="#" class="btn btn-block btn-primary">
@@ -75,10 +80,27 @@
     </div>
 </div>
 @code {
-    private List<AdditionalFeatureDto>? additionalFeatures;
+    private LoginCommand login = new();
+    private EditContext? editContext;
+    private JWTToken? token;
     protected override async Task OnInitializedAsync()
     {
-        BaseModel? obj = await Mediator.Send(new GetAllAdditionalFeaturesQuery());
-        additionalFeatures = (List<AdditionalFeatureDto>)obj.Data;
+        editContext = new(login);
+        await Task.CompletedTask;
+    }
+    private async Task HandleLogin()
+    {
+        if (editContext != null && editContext.Validate())
+        {
+            BaseModel? obj = await Mediator.Send(new LoginCommand());
+            token = (JWTToken)obj.Data;
+            await Task.CompletedTask;
+            if (token == null)
+                NavManager.NavigateTo("account/login");
+        }
+        else
+        {
+            //Logger.LogInformation("HandleSubmit called: Form is INVALID");
+        }
     }
 }

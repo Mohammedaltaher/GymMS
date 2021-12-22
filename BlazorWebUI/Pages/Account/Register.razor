@@ -5,6 +5,7 @@
 
 <PageTitle>Register</PageTitle>
 @inject IMediator Mediator;
+@inject NavigationManager NavManager;
 @*@inject ILogger Logger;*@
 
 
@@ -103,26 +104,26 @@
     </div>
 </div>
 @code {
-    private CreateUserAccountCommand register = new();
+    private RegisterUserAccountCommand register = new();
     private EditContext? editContext;
-    //private CustomFormValidator customFormValidator;
-    private bool isRegistrationSuccess = false;
     protected override async Task OnInitializedAsync()
     {
         editContext = new(register);
+        await Task.CompletedTask;
     }
     private async Task HandleSubmit()
     {
-        isRegistrationSuccess = false;
         if (editContext != null && editContext.Validate())
         {
             BaseModel? obj = await Mediator.Send(register);
-            int userId = (int)obj.Data;
+            string userId = (string)obj.Data;
             await Task.CompletedTask;
+            if (String.IsNullOrEmpty(userId))
+                NavManager.NavigateTo("account/login");
         }
         else
         {
-             //Logger.LogInformation("HandleSubmit called: Form is INVALID");
+            //Logger.LogInformation("HandleSubmit called: Form is INVALID");
         }
     }
 }

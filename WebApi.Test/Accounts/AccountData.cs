@@ -21,7 +21,8 @@ public static class AccountData
                 new User()
                 {
                     Id="2",
-                    UserName = "Bakry Eltaher",
+                    UserName = "Bakry2",
+                    PasswordHash = "Moh@123",
                     Email = "Bakry@gmail.com"
                 },
             };
@@ -55,8 +56,8 @@ public static class AccountData
     {
         return new LoginCommand()
         {
-            Username ="Mohammed2",
-            Password ="Moh@123"
+            Username = "Bakry2",
+            Password = "Moh@123"
         };
     }
 
