@@ -1,9 +1,21 @@
 ﻿@page "/additionalFeatures"
-
+@attribute [Authorize]
 
 <PageTitle>Additional Features </PageTitle>
 @inject IMediator  Mediator;
 
+
+<AuthorizeView>
+    <Authorized>
+        <h1>Hello, @context.User.Identity.Name!</h1>
+        <p>You can only see this content if you're authorized.</p>
+        @*<button @onclick="SecureMethod">Authorized Only Button</button>*@
+    </Authorized>
+    <NotAuthorized>
+        <h1>Authentication Failure!</h1>
+        <p>You're not signed in.</p>
+    </NotAuthorized>
+</AuthorizeView>
 <PageTitle>Additional Features </PageTitle>
 <!-- Content Header (Page header) -->
 <div class="content-header">

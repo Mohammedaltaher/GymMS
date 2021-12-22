@@ -6,6 +6,7 @@
 <PageTitle>Additional Features </PageTitle>
 @inject IMediator Mediator;
 @inject NavigationManager NavManager;
+@inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <PageTitle>Additional Features </PageTitle>
 
@@ -92,11 +93,27 @@
     {
         if (editContext != null && editContext.Validate())
         {
-            BaseModel? obj = await Mediator.Send(new LoginCommand());
+            BaseModel? obj = await Mediator.Send(login);
             token = (JWTToken)obj.Data;
             await Task.CompletedTask;
             if (token == null)
                 NavManager.NavigateTo("account/login");
+
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.Identity.IsAuthenticated)
+            {
+                //_authMessage = $"{user.Identity.Name} is authenticated.";
+                //_claims = user.Claims;
+                //_surnameMessage =
+                //    $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
+            }
+            else
+            {
+               // _authMessage = "The user is NOT authenticated.";
+            }
+            NavManager.NavigateTo("/");
         }
         else
         {
