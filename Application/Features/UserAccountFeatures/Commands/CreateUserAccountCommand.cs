@@ -27,6 +27,7 @@ namespace Application.Features.UserAccountFeatures.Commands
         public string Password { get; set; }
         [Required]
         public string RePassword { get; set; }
+        public AppRoleEnum Role { get; set; }
         public class CreateUserAccountCommandHandler : IRequestHandler<CreateUserAccountCommand, BaseModel>
         {
             private readonly IApplicationDbContext _context;
@@ -64,7 +65,9 @@ namespace Application.Features.UserAccountFeatures.Commands
                         Messege = "User not registered "
                     };
                 }
-                var addUserRole = await _userManager.AddToRoleAsync(UserAccount, AppRoleEnum.User.GetDescription());
+
+
+                var addUserRole = await _userManager.AddToRoleAsync(UserAccount, command.Role.GetDescription());
                 if (!addUserRole.Succeeded)
                 {
                     return new BaseModel
@@ -76,7 +79,7 @@ namespace Application.Features.UserAccountFeatures.Commands
                 await _context.SaveChangesAsync();
                 return new BaseModel
                 {
-                    Data =  UserAccount.Id ,
+                    Data = UserAccount.Id,
                     StatusCode = StatusCodes.Status200OK,
                     Messege = "User Created successfully with role "
                 };

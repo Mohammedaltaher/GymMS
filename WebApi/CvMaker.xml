@@ -83,14 +83,14 @@
             
             </summary>
         </member>
-        <member name="M:WebApi.Controllers.v1.UserAccountController.RegisterUser(Application.Features.UserAccountFeatures.Commands.CreateUserAccountCommand)">
+        <member name="M:WebApi.Controllers.v1.UserAccountController.RegisterUser(Application.Features.UserAccountFeatures.Commands.RegisterUserAccountCommand)">
             <summary>
             Register  New User.
             </summary>
             <param name="command"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Controllers.v1.UserAccountController.CreateAdmin(Application.Features.UserAccountFeatures.Commands.CreateAdminUserAccountCommand)">
+        <member name="M:WebApi.Controllers.v1.UserAccountController.CreateAdmin(Application.Features.UserAccountFeatures.Commands.CreateUserAccountCommand)">
             <summary>
             Create new admin user.
             </summary>

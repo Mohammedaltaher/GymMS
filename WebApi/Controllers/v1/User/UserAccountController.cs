@@ -23,7 +23,7 @@ namespace WebApi.Controllers.v1
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("RegisterUser")]
-        public async Task<IActionResult> RegisterUser(CreateUserAccountCommand command)
+        public async Task<IActionResult> RegisterUser(RegisterUserAccountCommand command)
         {
             var obj = await Mediator.Send(command);
             return StatusCode(obj.StatusCode, new { UserId = (string)obj.Data, Message = obj.Messege });
@@ -33,8 +33,8 @@ namespace WebApi.Controllers.v1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPost("CreateAdmin")]
-        public async Task<IActionResult> CreateAdmin(CreateAdminUserAccountCommand command)
+        [HttpPost("CreateUser")]
+        public async Task<IActionResult> CreateAdmin(CreateUserAccountCommand command)
         {
             var obj = await Mediator.Send(command);
             return StatusCode(obj.StatusCode, new { Data = (JWTToken)obj.Data, Message = obj.Messege });

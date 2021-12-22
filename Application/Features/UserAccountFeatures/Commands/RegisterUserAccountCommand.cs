@@ -6,33 +6,37 @@ using System.Threading.Tasks;
 using Domain.Common;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
-using AutoMapper;
 using Application.Model.Common;
 using Microsoft.AspNetCore.Http;
 using Application.Helper.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.Features.UserAccountFeatures.Commands
 {
-    public class CreateAdminUserAccountCommand : IRequest<BaseModel>
+    public class RegisterUserAccountCommand : IRequest<BaseModel>
     {
+        [Required]
+        [StringLength(50, ErrorMessage = "Name too long (50 character limit).")]
         public string Name { get; set; }
+        [Required]
+        [StringLength(16, ErrorMessage = "User Name too long (16 character limit).")]
         public string Username { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
         public string Password { get; set; }
-
-        public class CreateAdminUserAccountCommandHandler : IRequestHandler<CreateAdminUserAccountCommand, BaseModel>
+        [Required]
+        public string RePassword { get; set; }
+        public class RegisterUserAccountCommandHandler : IRequestHandler<RegisterUserAccountCommand, BaseModel>
         {
             private readonly IApplicationDbContext _context;
             private readonly UserManager<User> _userManager;
-            public CreateAdminUserAccountCommandHandler(IApplicationDbContext context, UserManager<User> userManager)
+            public RegisterUserAccountCommandHandler(IApplicationDbContext context, UserManager<User> userManager)
             {
                 _context = context;
                 _userManager = userManager;
             }
-
-            
-
-            public async Task<BaseModel> Handle(CreateAdminUserAccountCommand command, CancellationToken cancellationToken)
+            public async Task<BaseModel> Handle(RegisterUserAccountCommand command, CancellationToken cancellationToken)
             {
 
                 var userExists = await _userManager.FindByNameAsync(command.Username);
@@ -41,7 +45,7 @@ namespace Application.Features.UserAccountFeatures.Commands
                     return new BaseModel
                     {
                         StatusCode = StatusCodes.Status405MethodNotAllowed,
-                        Messege = "User already exists"
+                        Messege = "User name  already exists"
                     };
                 }
                 var UserAccount = new User
@@ -51,17 +55,16 @@ namespace Application.Features.UserAccountFeatures.Commands
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
 
-                var addUser = await _userManager.CreateAsync(UserAccount, command.Password);
+                var addUser = await _userManager.CreateAsync(UserAccount, "Role");
                 if (!addUser.Succeeded)
                 {
                     return new BaseModel
                     {
                         StatusCode = StatusCodes.Status405MethodNotAllowed,
-                        Messege = "User not Created"
+                        Messege = "User not registered "
                     };
                 }
-
-                var addUserRole = await _userManager.AddToRoleAsync(UserAccount, AppRoleEnum.Admin.GetDescription());
+                var addUserRole = await _userManager.AddToRoleAsync(UserAccount, AppRoleEnum.User.GetDescription());
                 if (!addUserRole.Succeeded)
                 {
                     return new BaseModel
@@ -73,7 +76,7 @@ namespace Application.Features.UserAccountFeatures.Commands
                 await _context.SaveChangesAsync();
                 return new BaseModel
                 {
-                    Data = UserAccount.Id,
+                    Data =  UserAccount.Id ,
                     StatusCode = StatusCodes.Status200OK,
                     Messege = "User Created successfully with role "
                 };
